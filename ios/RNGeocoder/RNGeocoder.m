@@ -90,6 +90,9 @@ RCT_EXPORT_METHOD(geocodeAddress:(NSString *)address
 
     NSArray *lines = placemark.addressDictionary[@"FormattedAddressLines"];
 
+    NSTimeZone* localTimeZone = placemark.timeZone;
+    NSString* timeZoneName = [localTimeZone name];
+
     NSDictionary *result = @{
      @"feature": name,
      @"position": @{
@@ -105,7 +108,8 @@ RCT_EXPORT_METHOD(geocodeAddress:(NSString *)address
      @"postalCode": placemark.postalCode ?: [NSNull null],
      @"adminArea": placemark.administrativeArea ?: [NSNull null],
      @"subAdminArea": placemark.subAdministrativeArea ?: [NSNull null],
-     @"formattedAddress": [lines componentsJoinedByString:@","]
+     @"formattedAddress": [lines componentsJoinedByString:@","],
+     @"timeZone": timeZoneName ?: [NSNull null]
    };
 
     [results addObject:result];
